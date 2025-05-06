@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><b>Fraud Transaction Detection</b></title>
+    <style>
+        .input-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px; /* Adjust as needed */
+        }
+
+        .input-container label {
+            flex: 0 0 45%; /* Adjust label width as needed */
+            text-align: right;
+            margin-right: 10px; /* Adjust as needed */
+        }
+
+        .input-container input {
+            flex: 1;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Fraud Transaction Detection</h1>
+    <form action="/predict" method="post">
+        <label for="type">Select Type:</label>
+        <select name="type" id="type">
+            <div class="option-container">
+                <option value="CASH IN">CASH IN</option>
+                <option value="CASH OUT">CASH OUT</option>
+            </div>
+            <option value="DEBIT">DEBIT</option>
+            <option value="PAYMENT">PAYMENT</option>
+            <option value="TRANSFER">TRANSFER</option>
+        </select><br><br>
+        <div>
+            <label for="amount">Enter Amount:</label>
+            <input type="number" name="amount" id="amount" step="0.01"><br><br>
+        </div>
+        <div>
+            <label for="oldBalanceOrig">Enter Old Balance Origin:</label>
+            <input type="number" name="oldBalanceOrig" id="oldBalanceOrig" step="0.01">
+        </div>
+        <label for="newBalanceOrig" class = "text-center">Enter New Balance Origin:</label>
+        <input type="number" name="newBalanceOrig" id="newBalanceOrig" step="0.01"><br><br>
+        <label for="isFlaggedFraud">Enter isFlaggedFraud:</label>
+        <input type="number" name="isFlaggedFraud" id="isFlaggedFraud" step="1"><br><br>
+        <label for="model">Select Model:</label>
+        <select name="model" id="model">
+            <option value="LOGISTIC">Logistic Regression</option>
+            <option value="Decision Trees">Decision Trees</option>
+            <option value="SVM">SVM</option>
+        </select><br><br>
+        <input type="submit" value="Predict">
+    {% if result %}
+    <p>{{ result }}</p>
+    {% endif %}
+
+    {% if accuracy %}
+    <p>{{ accuracy }}</p>
+    {% endif %}
+    </form>
+</body>
+</html>
